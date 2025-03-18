@@ -3,13 +3,13 @@
   <TheChart />
 </template>
 
-<script>
+<script setup>
 import TheChart from '@/components/TheChart.vue'
 
-export default {
-  name: 'App',
-  components: { TheChart },
-}
+// export default {
+//   name: 'App',
+//   components: { TheChart },
+// }
 //"https://data.cityofnewyork.us/resource/bqiq-cu78.json"
 </script>
 
