@@ -21,7 +21,7 @@ defineProps({
   //pass in the animal which is an object
 })
 let chartData = {
-  labels: ['January', 'February', 'March'],
+  labels: [],
   datasets: [{ data: [40, 20, 12] }],
 }
 let chartOptions = {
@@ -38,10 +38,11 @@ onMounted(async () => {
       console.log(data)
       data.forEach((crime) => {
         console.log(crime.county)
+        console.log(chartData.labels)
         if (chartData.labels.includes(crime.county)) {
           console.log('bruh')
         } else {
-          chartData.push(crime.county)
+          chartData.labels.push(crime.county)
           console.log(chartData)
         }
       })
@@ -50,6 +51,7 @@ onMounted(async () => {
     alert('hey I could not find that agent unc')
   }
 })
+
 // export default {
 //   name: 'BarChart',
 //   components: { Bar },
