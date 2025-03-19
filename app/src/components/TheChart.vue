@@ -13,6 +13,7 @@ import {
   CategoryScale,
   LinearScale,
 } from 'chart.js'
+import { onMounted, reactive } from 'vue'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 defineProps({
@@ -26,7 +27,8 @@ let chartData = {
 let chartOptions = {
   responsive: true,
 }
-async function dadata() {
+
+onMounted(async () => {
   try {
     const response = await fetch('https://data.cityofnewyork.us/resource/bqiq-cu78.json')
     if (response.status != 200) {
@@ -35,6 +37,7 @@ async function dadata() {
       let data = await response.json()
       console.log(data)
       data.forEach((crime) => {
+        console.log(crime.county)
         if (chartData.labels.includes(crime.county)) {
           console.log('bruh')
         } else {
@@ -46,8 +49,7 @@ async function dadata() {
   } catch (error) {
     alert('hey I could not find that agent unc')
   }
-}
-dadata()
+})
 // export default {
 //   name: 'BarChart',
 //   components: { Bar },
