@@ -20,9 +20,15 @@ defineProps({
   chart: Object,
   //pass in the animal which is an object
 })
+let Bronx = 0
+let Kings = 0
+let NewYork = 0
+let Queens = 0
+let Richmond = 0
+
 let chartData = {
-  labels: [],
-  datasets: [{ data: [40, 20, 12] }],
+  labels: ['Bronx', 'Kings', 'Brroklyn', 'Queens', 'Staten Island'],
+  datasets: [{ data: [Bronx, Kings, NewYork, Queens, Richmond] }],
 }
 let chartOptions = {
   responsive: true,
@@ -30,23 +36,38 @@ let chartOptions = {
 
 onMounted(async () => {
   try {
-    const response = await fetch('https://data.cityofnewyork.us/resource/bqiq-cu78.json')
+    const response = await fetch('https://data.cityofnewyork.us/resource/bqiq-cu78.json?$limit=100')
     if (response.status != 200) {
       throw new Error(response)
     } else {
       let data = await response.json()
       console.log(data)
       data.forEach((crime) => {
+        // if (chartData.labels.includes(crime.county)) {
+        //   console.log('bruh')
+        // } else {
+        //   chartData.labels.push(crime.county)
+        //   console.log(chartData)
         console.log(crime.county)
-        console.log(chartData.labels)
-        if (chartData.labels.includes(crime.county)) {
-          console.log('bruh')
-        } else {
-          chartData.labels.push(crime.county)
-          console.log(chartData)
+        if (crime.county === 'BRONX') {
+          Bronx += 1
+        }
+        if (crime.county === 'QUEENS') {
+          chartData.datasets.data[1] += 1
+        }
+        if (crime.county === 'NEW YORK') {
+          NewYork += 1
+        }
+        if (crime.county === 'KINGS') {
+          Kings += 1
+        }
+        if (crime.county === 'RICHMOND') {
+          Richmond += 1
         }
       })
     }
+    console.log(chartData.labels)
+    console.log(Bronx, Kings, NewYork, Queens, Richmond)
   } catch (error) {
     alert('hey I could not find that agent unc')
   }
