@@ -4,7 +4,7 @@
 
 <script setup>
 import { Pie } from 'vue-chartjs'
-import { defineProps } from 'vue'
+
 import {
   Chart as ChartJS,
   Title,

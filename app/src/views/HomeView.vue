@@ -9,7 +9,7 @@
 
 
     <div class="w-full max-w-md h-1000 mx-auto">
-      <TheChart :chartData="chartData" :chartOptions="chartOptions" />
+      <BarChart :chartData="chartData" :chartOptions="chartOptions" />
     </div>
     
   </div>
@@ -17,12 +17,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import TheChart from '@/components/TheChart.vue'
+import BarChart from '@/components/BarChart.vue'
 
 
 const chartData = ref({
   labels: ['Bronx', 'Kings', 'Brooklyn', 'Queens', 'Staten Island'],
   datasets: [{ 
+    label: 'Hate Crime Data',
     data: [0, 0, 0, 0, 0],
     backgroundColor: [
       '#FF5733', 
@@ -31,11 +32,46 @@ const chartData = ref({
       '#FF33A1', 
       '#FFB833'  
     ],
-    hoverOffset: 4 }],
+    
+    borderColor: [
+      'rgb(0, 0, 0)',
+      'rgb(0, 0, 0)',
+      'rgb(0, 0, 0)',
+      'rgb(0, 0, 0)',
+      'rgb(0, 0, 0)',
+      'rgb(0, 0, 0)',
+      'rgb(0, 0, 0)'
+    ],
+    borderWidth: 1 }],
 })
 
 const chartOptions = ref({
   responsive: true,
+  plugins: {
+    legend: {
+      position: 'top', 
+      labels: {
+        color: '#333', 
+        font: {
+          size: 14, 
+          weight: 'bold', 
+        },
+      },
+    },
+    tooltip: {
+      callbacks: {
+        label: function(tooltipItem) {
+          return tooltipItem.label + ': ' + tooltipItem.raw + ' crimes';
+        },
+      },
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+
 })
 
 onMounted(async () => {
@@ -74,7 +110,28 @@ onMounted(async () => {
         labels: ['Bronx', 'Kings', 'Brooklyn', 'Queens', 'Staten Island'],
         datasets: [{
           data: crimeCounts, 
+          label: 'Hate Crime Data',
+          
+          backgroundColor: [
+            '#FF5733', 
+            '#33FF57', 
+            '#3357FF', 
+            '#FF33A1', 
+            '#FFB833'  
+          ],
+          
+          borderColor: [
+            'rgb(0, 0, 0)',
+            'rgb(0, 0, 0)',
+            'rgb(0, 0, 0)',
+            'rgb(0, 0, 0)',
+            'rgb(0, 0, 0)',
+            'rgb(0, 0, 0)',
+            'rgb(0, 0, 0)'
+          ],
+          borderWidth: 1
         }],
+        
       }
     }
   } catch (error) {
